@@ -42,24 +42,24 @@ void setup() {
                             };
   
   typedef struct ButtonMessages{
-                            uint8_t[][1] UP_UP = {['U'], ['U']}
-                            uint8_t[][1] UP_DOWN = {['U'], ['D']}
-                            uint8_t[][1] LEFT_UP ={['L'], ['U']}
-                            uint8_t[][1] LEFT_DOWN ={['L'], ['D']}
-                            uint8_t[][1] RIGHT_UP ={['R'], ['U']}
-                            uint8_t[][1] RIGHT_DOWN ={['R'], ['D']}
-                            uint8_t[][1] DOWN_UP ={['D'], ['U']}
-                            uint8_t[][1] DOWN_DOWN ={['D'], ['D']}
+                            uint8_t[][1] UP_UP = {['U'], ['U'], ['|']}
+                            uint8_t[][1] UP_DOWN = {['U'], ['D'], ['|']}
+                            uint8_t[][1] LEFT_UP ={['L'], ['U'], ['|']}
+                            uint8_t[][1] LEFT_DOWN ={['L'], ['D'], ['|']}
+                            uint8_t[][1] RIGHT_UP ={['R'], ['U'], ['|']}
+                            uint8_t[][1] RIGHT_DOWN ={['R'], ['D'], ['|']}
+                            uint8_t[][1] DOWN_UP ={['D'], ['U'], ['|']}
+                            uint8_t[][1] DOWN_DOWN ={['D'], ['D'], ['|']}
 
-                            uint8_t[][1] A_UP ={['A'], ['U']}
-                            uint8_t[][1] A_DOWN ={['A'], ['D']}
-                            uint8_t[][1] B_UP ={['B'], ['U']}
-                            uint8_t[][1] B_DOWN ={['B'], ['D']}
-                            uint8_t[][1] C_UP ={['C'], ['U']}
-                            uint8_t[][1] C_DOWN ={['C'], ['D']}
+                            uint8_t[][1] A_UP ={['A'], ['U'], ['|']}
+                            uint8_t[][1] A_DOWN ={['A'], ['D'], ['|']}
+                            uint8_t[][1] B_UP ={['B'], ['U'], ['|']}
+                            uint8_t[][1] B_DOWN ={['B'], ['D'], ['|']}
+                            uint8_t[][1] C_UP ={['C'], ['U'], ['|']}
+                            uint8_t[][1] C_DOWN ={['C'], ['D'], ['|']}
 
-                            uint8_t[][1] START_UP = {['S'], ['U']}
-                            uint8_t[][1] START_DOWN = {['S'], ['D']}
+                            uint8_t[][1] START_UP = {['S'], ['U'], ['|']}
+                            uint8_t[][1] START_DOWN = {['S'], ['D'], ['|']}
                             };
   
   // just button messages
@@ -114,6 +114,17 @@ void setup() {
     pinMode(base.SELECT, OUTPUT); // pulled high/low to use other alt pins
   }
 
+  down_last = 1;
+  up_last = 1;
+  left_last = 1;
+  right_last = 1;
+
+  a_last = 1;
+  b_last = 1;
+  c_last = 1;
+
+  start_last = 1;
+
   if (!radio.begin()){
     Serial.println("radio hardware not responding...")
     while(1){sleep 1;}
@@ -123,7 +134,20 @@ void setup() {
 void loop() {
   // read from buttons,
   if (MODE == "CONTROLLER"){
-
+    // check pins
+    down_last = True
+    if (digitalRead(controller.UP)){up_last = !up_last; // send radio command}
+    if (digitalRead(controller.DOWN)){radio.write(&button.DOWN_UP)} // send radio}
+    else{radio.write(&button.DOWN_DOWN)}
+    
+    if {digitalRead(controller.LEFT)){left_last = !left_last;}
+    if (digitalRead(controller.RIGHT)){right_last = !right_last;}
+    if (digitalRead(controller.BUTTON_A)){a_last = !a_last;}
+    if (digitalRead(controller.BUTTON_B)){b_last = !b_last;}
+    if (digitalRead(controller.BUTTON_C)){c_last = !c_last;}
+    
+    if (digitalRead(controller.START)){start_last = !start_last;}
+    
   }
   // if buttons change,
   // send changes
