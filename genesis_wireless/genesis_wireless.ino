@@ -13,8 +13,8 @@ void setup() {
   String MODE = "CONTROLLER";
   //String MODE = "BASE_UNIT";
   
-  temp[][1] = {['a'], ['a'], ['a'], ['a'], ['a']};
-  RADIO_PAYLOAD_SIZE = sizeof(temp) // 5 characters
+  //temp[][1] = {['a'], ['a'], ['a'], ['a'], ['a']};
+  //RADIO_PAYLOAD_SIZE = sizeof(temp) // 5 characters
 
   // other pins
   // SCK 13
@@ -40,11 +40,33 @@ void setup() {
                             int SELECT = 9;
                             int START = 10;
                             };
+  
   typedef struct ButtonMessages{
+                            uint8_t[][1] UP_UP = {['U'], ['U']}
+                            uint8_t[][1] UP_DOWN = {['U'], ['D']}
+                            uint8_t[][1] LEFT_UP ={['L'], ['U']}
+                            uint8_t[][1] LEFT_DOWN ={['L'], ['D']}
+                            uint8_t[][1] RIGHT_UP ={['R'], ['U']}
+                            uint8_t[][1] RIGHT_DOWN ={['R'], ['D']}
+                            uint8_t[][1] DOWN_UP ={['D'], ['U']}
+                            uint8_t[][1] DOWN_DOWN ={['D'], ['D']}
 
-  };
+                            uint8_t[][1] A_UP ={['A'], ['U']}
+                            uint8_t[][1] A_DOWN ={['A'], ['D']}
+                            uint8_t[][1] B_UP ={['B'], ['U']}
+                            uint8_t[][1] B_DOWN ={['B'], ['D']}
+                            uint8_t[][1] C_UP ={['C'], ['U']}
+                            uint8_t[][1] C_DOWN ={['C'], ['D']}
+
+                            uint8_t[][1] START_UP = {['S'], ['U']}
+                            uint8_t[][1] START_DOWN = {['S'], ['D']}
+                            };
+  
+  // just button messages
+  ButtonMessages button = ButtonMessages;
+  
   // Let these addresses be used for the pair
-uint8_t address[][5] = {"base", "cont"};
+  uint8_t address[][5] = {"base", "cont"};
 
   if (MODE == "CONTROLLER"){
     //struct controller = Controller;
@@ -53,7 +75,7 @@ uint8_t address[][5] = {"base", "cont"};
     //radio
     RF24 radio (controller.RF24_CE, controller.RF24_CS);
     radio.setPAlevel(RF24_PA_MED); // set to medium for testing
-    radio.setPayloadSize(RADIO_PAYLOAD_SIZE);
+    radio.setPayloadSize(sizeof(button.UP_DOWN));
     radio.openWritingPipe(1,address[0]);// reads from buttons, writes to base
 
     pinMode(controller.UP, INPUT_PULLUP);
@@ -65,7 +87,9 @@ uint8_t address[][5] = {"base", "cont"};
     pinMode(controller.BUTTON_C, INPUT_PULLUP);
     pinMode(controller.START, INPUT_PULLUP);
     //pinMode(controller.SELECT, INPUT_PULLUP); //not a real pin, used in base station
-  
+  }//end of CONTROLLER check
+
+
   // this is for the base station that plugs
   // into the sega
   else if (MODE=="BASE_UNIT"){
@@ -75,7 +99,7 @@ uint8_t address[][5] = {"base", "cont"};
     //radio
     RF24 radio (controller.RF24_CE, controller.RF24_CS);
     radio.setPAlevel(RF24_PA_MED); // set to medium for testing
-    radio.setPayloadSize(RADIO_PAYLOAD_SIZE):
+    radio.setPayloadSize(sizeof(button.UP_DOWN));
     radio.openReadingPipe(0, address[1]); //reads from controller, does stuff
 
     // pin setups
@@ -94,10 +118,13 @@ uint8_t address[][5] = {"base", "cont"};
     Serial.println("radio hardware not responding...")
     while(1){sleep 1;}
   }
-}
+}//end setup()
 
 void loop() {
   // read from buttons,
+  if (MODE == "CONTROLLER"){
+
+  }
   // if buttons change,
   // send changes
 
