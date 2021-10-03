@@ -5,6 +5,7 @@ will have a 3d printed body
 is wireless, uses RF24L01  
 will be using a joystick for the left side D-pad  
 no plans right now to implement XYZ buttons  
+pressing all three buttons, ABC, together will reset/calibrate joystick  
 
 should work now, it's so far untested. I'm waiting to be able to modify a geniune controller due to the connectors.  
 
