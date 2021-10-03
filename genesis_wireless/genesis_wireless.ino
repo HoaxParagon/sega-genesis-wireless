@@ -42,6 +42,11 @@ void setup() {
                             };
   
   typedef struct ButtonMessages{
+                            //uint8_t[2][1] UP = {['U']}
+                            //uint8_t[2][1] UP = {['U']}
+                            //uint8_t[2][1] UP = {['U']}
+                            //uint8_t[2][1] UP = {['U']}
+                            //uint8_t[2][1] UP = {['U']}
                             uint8_t[][1] UP_UP = {['U'], ['U'], ['|']}
                             uint8_t[][1] UP_DOWN = {['U'], ['D'], ['|']}
                             uint8_t[][1] LEFT_UP ={['L'], ['U'], ['|']}
@@ -136,24 +141,114 @@ void loop() {
   if (MODE == "CONTROLLER"){
     // check pins
     down_last = True
-    if (digitalRead(controller.UP)){up_last = !up_last; // send radio command}
+    
+    curr_state = digitalRead(controller.UP)
+    if (curr_state != down_last){down_last = curr_state;radio.write(&button.UP_DOWN);} // send radio command}
+    else if(curr_state == 0){radio.write(&button.UP_UP);}
+
     if (digitalRead(controller.DOWN)){radio.write(&button.DOWN_UP)} // send radio}
-    else{radio.write(&button.DOWN_DOWN)}
+    else{radio.write(&button.DOWN_DOWN);}
     
-    if {digitalRead(controller.LEFT)){left_last = !left_last;}
-    if (digitalRead(controller.RIGHT)){right_last = !right_last;}
-    if (digitalRead(controller.BUTTON_A)){a_last = !a_last;}
-    if (digitalRead(controller.BUTTON_B)){b_last = !b_last;}
-    if (digitalRead(controller.BUTTON_C)){c_last = !c_last;}
+    if {digitalRead(controller.LEFT)){radio.write(&button.LEFT_DOWN);}
+    else{radio.write(&button.LEFT_UP)}
+
+    if (digitalRead(controller.RIGHT)){radio.write(&button.RIGHT_DOWN);}
+    else{radio.write(&button.RIGHT_UP);}
+
+    if (digitalRead(controller.BUTTON_A)){radio.write(&button.A_DOWN);}
+    else{radio.write(&button.A_UP);}
+    if (digitalRead(controller.BUTTON_B)){radio.write(&button.B_DOWN);}
+    else{radio.write(&button.B_UP);}
+    if (digitalRead(controller.BUTTON_B)){radio.write(&button.C_DOWN);}
+    else{radio.write(&button.C_UP);}
     
-    if (digitalRead(controller.START)){start_last = !start_last;}
-    
+    if (digitalRead(controller.START)){radio.write(&button.START_DOWN);}
+    else{radio.write(&button.START_UP);}
   }
   // if buttons change,
   // send changes
+  else{
+    // get bit stream, change accordingly
+    if (radio.available()){
+      radio.read(&buffer, sizeof(button.UP_DOWN));
+      // deal with the flow of info
+      switch (buffer){
+        case button.UP_DOWN:
+          digitalWrite(base.SELECT, HIGH);
+          digitalWrite(base.UP, LOW);
+          break;
+        case button.UP_UP:
+          digitalWrite(base.SELECT, HIGH);
+          digitalWrite(base.UP, HIGH);
+          break;
+        case button.DOWN_DOWN:
+          digitalWrite(base.SELECT, HIGH);
+          digitalWrite(base.DOWN, LOW);
+          break;
+        case button.DOWN_UP:
+          digitalWrite(base.SELECT, HIGH);
+          digitalWrite(base.DOWN, HIGH);
+          break;
+        case button.DOWN_DOWN:
+          digitalWrite(base.SELECT, HIGH);
+          digitalWrite(base.DOWN, LOW);
+          break;
+        case button.LEFT_UP:
+          digitalWrite(base.SELECT, LOW);
+          digitalWrite(base.LEFT, HIGH);
+          break;
+        case button.LEFT_DOWN:
+          digitalWrite(base.SELECT, HIGH);
+          digitalWrite(base.LEFT, LOW);
+          break;
+        case button.RIGHT_UP:
+          digitalWrite(base.SELECT, LOW);
+          digitalWrite(base.RIGHT, HIGH);
+          break;
+        case button.RIGHT_DOWN:
+          digitalWrite(base.SELECT, HIGH);
+          digitalWrite(base.RIGHT, LOW);
+          break;
+        case button. START_UP:
+          digitalWrite(base.SELECT, HIGH);
+          digitalWrite(base.START, HIGH);
+          break;
+        case button.START_DOWN:
+          digitalWrite(base.SELECT, LOW);
+          digitalWrite(base.START, LOW);
+          break;
+        case button.A_UP:
+          digitalWrite(base.SELECT, HIGH);        
+          digitalWrite(base.BUTTON_A, HIGH);
+          break;
+        case button.A_DOWN:
+          digitalWrite(base.SELECT, LOW);
+          digitalWrite(base.BUTTON_A, LOW);
+          break;
+        case button.B_UP:
+          digitalWrite(base.SELECT, HIGH);        
+          digitalWrite(base.BUTTON_B, HIGH);
+          break;
+        case button.B_DOWN:
+          digitalWrite(base.SELECT, HIGH);
+          digitalWrite(base.BUTTON_B, LOW);
+          break;
+        case button.C_UP:
+          digitalWrite(base.SELECT, HIGH);
+          digitalWrite(base.BUTTON_C, HIGH);
+          break;
+        case button.C_DOWN:
+          digitalWrite(base.SELECT, HIGH);
+          digitalWrite(base.BUTTON_C, LOW);
+          break;
+        default:
+          //throw it out?
+          printf("throwing out input, was unexpected")
+          break;
+        
+      }
+    }
+  }
 
-  // read from radio stream
-  // if stream changes
-  // change button states
 
 }
