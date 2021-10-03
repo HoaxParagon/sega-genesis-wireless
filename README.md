@@ -13,4 +13,5 @@ should work now, it's so far untested. I'm waiting to be able to modify a geniun
 probably won't work quite right though  
 
 ![pinout](https://atariage.com/forums/uploads/monthly_01_2018/post-42561-0-70160200-1517360545.png)  
-![pinout2](http://www.ataricompendium.com/faq/faq_controller_pinout.jpg)
+![pinout2](http://www.ataricompendium.com/faq/faq_controller_pinout.jpg)  
+![pinout3](http://www.haku.co.uk/pics/SegaJoypadPinout.jpg)  
