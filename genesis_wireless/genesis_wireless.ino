@@ -166,7 +166,6 @@ void setup() {
 }//end setup()
 
 void loop() {
-
   // read from buttons,
   if (MODE == "CONTROLLER"){
     // check pins
