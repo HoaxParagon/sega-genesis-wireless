@@ -171,7 +171,7 @@ void loop() {
   if (MODE == "CONTROLLER"){
     // check pins
     
-    curr_state = digitalRead(controller.UP);
+    //curr_state = digitalRead(controller.UP);
     // button is not pressed
     if (digitalRead(controller.UP);){state = state | BUTTON_UP;}// and the button
     else{state = state ^ BUTTON_UP;}
@@ -182,9 +182,9 @@ void loop() {
     else{state = state ^ BUTTON_LEFT;}
     if (digitalRead(controller.RIGHT)){state = state | BUTTON_RIGHT;}
     else{state = state ^ BUTTON_RIGHT;}
-    if (digitalRead(controller.BUTTON_A)){radio.write(&button.A_DOWN);}
+    if (digitalRead(controller.BUTTON_A)){state = state | BUTTON_A;}
     else{state = state ^ BUTTON_A;}
-    if (digitalRead(controller.BUTTON_B)){state = state | BUTTON_A;}
+    if (digitalRead(controller.BUTTON_B)){state = state | BUTTON_B;}
     else{state = state ^ BUTTON_B;}
     if (digitalRead(controller.BUTTON_C)){state = state | BUTTON_C;}
     else{state = state ^ BUTTON_C;}
