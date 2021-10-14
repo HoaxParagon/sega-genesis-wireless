@@ -4,8 +4,10 @@ the files to make a wireless controller pair for the Sega Genesis
 #### PLANS  
 will have a 3d printed body  
 is wireless, uses RF24L01  
-will be using a joystick for the left side D-pad  
-no plans right now to implement XYZ buttons  
+~~will be using a joystick for the left side D-pad~~  
+I dropped the idea of an joystick for D-pad when I changed the in/out of the radio to a single state byte.  
+I may decide on doing a version with the joystick for a more universal appeal but not today.  
+no plans right now to implement XYZ buttons. NOTE: my controllers have xyz but I won't be interfacing with them  
 pressing all three buttons, ABC, together will reset/calibrate joystick  
 
 #### NOTES  
