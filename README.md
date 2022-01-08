@@ -14,7 +14,7 @@ I may decide on doing a version with the joystick for a more universal appeal bu
 
 no plans right now to implement XYZ buttons. NOTE: my controllers have xyz but I won't be interfacing with them  
 
-pressing all three buttons, ABC, together will reset/calibrate joystick  
+~~pressing all three buttons, ABC, together will reset/calibrate joystick~~
 
 #### NOTES  
 should work now, it's so far untested. I'm waiting to be able to modify a geniune controller due to the connectors.  
